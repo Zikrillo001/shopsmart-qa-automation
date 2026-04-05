@@ -3,7 +3,7 @@ import json
 import pytest
 
 from src.utils.data_loader import DataLoader
-from src.utils.exceptions import TestDataError
+from src.utils.exceptions import DataLoadError
 
 
 def test_load_json_success(tmp_path):
@@ -17,5 +17,5 @@ def test_load_json_success(tmp_path):
 
 
 def test_load_json_raises_error_for_missing_file():
-    with pytest.raises(TestDataError):
+    with pytest.raises(DataLoadError):
         DataLoader.load_json("missing_file.json")

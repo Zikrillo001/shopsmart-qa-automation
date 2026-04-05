@@ -17,6 +17,9 @@ class BaseClient:
         self.timeout = timeout
         self.session = requests.Session()
 
+    def set_token(self, token: str | None) -> None:
+        self.token = token
+
     def _build_url(self, endpoint: str) -> str:
         return f"{self.base_url}/{endpoint.lstrip('/')}"
 
@@ -45,7 +48,12 @@ class BaseClient:
             logger.exception("Request failed: %s %s", method.upper(), url)
             raise ApiClientError(f"Request failed for {method.upper()} {url}: {exc}") from exc
 
-        logger.info("Received response: %s for %s %s", response.status_code, method.upper(), url)
+        logger.info(
+            "Received response: %s for %s %s",
+            response.status_code,
+            method.upper(),
+            url,
+        )
         return response
 
     def get(self, endpoint: str, params: dict[str, Any] | None = None) -> requests.Response:

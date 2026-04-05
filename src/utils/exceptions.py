@@ -6,9 +6,8 @@ class ConfigError(FrameworkError):
     """Raised when configuration is invalid or missing."""
 
 
-class TestDataError(FrameworkError):
+class DataLoadError(FrameworkError):
     """Raised when test data is invalid or cannot be loaded."""
-
 
 class ApiClientError(FrameworkError):
     """Raised when API client operation fails."""
