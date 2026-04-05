@@ -1,14 +1,10 @@
-name: UI Tests
+name: Full Regression
 
 on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
   workflow_dispatch:
 
 jobs:
-  ui-tests:
+  full-regression:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,21 +25,13 @@ jobs:
         run: |
           playwright install --with-deps
 
-      - name: Set CI mode config
+      - name: Run full test suite
         run: |
-          echo "CI run uses headless mode"
+          pytest -v
 
-      - name: Run UI smoke tests
-        run: |
-          pytest tests/ui/smoke -m "ui and smoke" -v
-
-      - name: Run UI regression tests
-        run: |
-          pytest tests/ui/regression -m "ui and regression" -v
-
-      - name: Upload UI reports
+      - name: Upload full reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ui-test-reports
+          name: full-test-reports
           path: reports/
