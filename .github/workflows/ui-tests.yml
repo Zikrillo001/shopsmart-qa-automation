@@ -34,12 +34,16 @@ jobs:
           echo "CI run uses headless mode"
 
       - name: Run UI smoke tests
+        env:
+            CI: true
         run: |
-          pytest tests/ui/smoke -m "ui and smoke" -v
+            pytest tests/ui/smoke -m "ui and smoke" -v
 
       - name: Run UI regression tests
+        env:
+            CI: true
         run: |
-          pytest tests/ui/regression -m "ui and regression" -v
+            pytest tests/ui/regression -m "ui and regression" -v
 
       - name: Upload UI reports
         if: always()

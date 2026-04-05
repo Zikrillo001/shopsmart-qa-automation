@@ -85,7 +85,9 @@ def playwright_instance() -> Playwright:
 @pytest.fixture(scope="function")
 def browser(playwright_instance, config):
     browser_name = config.get("browser", "chromium")
-    headless = config.get("headless", True)
+
+    ci_mode = os.getenv("CI", "false").lower() == "true"
+    headless = True if ci_mode else config.get("headless", True)
 
     if browser_name == "firefox":
         browser = playwright_instance.firefox.launch(headless=headless)
