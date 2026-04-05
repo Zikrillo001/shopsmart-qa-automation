@@ -26,6 +26,7 @@ coverage.xml
 reports/
 allure-results/
 allure-report/
+output/allure/
 
 # Playwright
 playwright-report/
