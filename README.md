@@ -1,6 +1,3 @@
-Zo‘r — mana senga **to‘liq professional README.md** (copy-paste tayyor).
-Buni repo’ngdagi `README.md` ga qo‘y → darhol portfolio darajaga chiqadi.
-
 ---
 
 ````md
@@ -264,9 +261,6 @@ This project demonstrates real-world QA skills:
 ## 🔗 Project Link
 
 👉 [https://github.com/](https://github.com/)Zikrillo001/shopsmart-qa-automation
-
-````
-
 
 
 
