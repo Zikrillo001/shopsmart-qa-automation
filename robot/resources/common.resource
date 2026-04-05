@@ -10,7 +10,7 @@ ${INVALID_PASS}   wrong_password
 
 *** Keywords ***
 Open Login Page
-    New Browser    chromium    headless=False
+    New Browser    chromium    headless=True
     New Context
     New Page    ${BASE_URL}
 
