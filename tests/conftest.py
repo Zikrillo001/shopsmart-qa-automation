@@ -6,6 +6,8 @@ from src.clients.cart_client import CartClient
 from src.clients.orders_client import OrdersClient
 from src.clients.products_client import ProductsClient
 from src.utils.config_reader import ConfigReader
+import os
+from datetime import datetime
 
 
 @pytest.fixture(scope="session")
@@ -83,13 +85,14 @@ def playwright_instance() -> Playwright:
 @pytest.fixture(scope="function")
 def browser(playwright_instance, config):
     browser_name = config.get("browser", "chromium")
+    headless = config.get("headless", True)
 
     if browser_name == "firefox":
-        browser = playwright_instance.firefox.launch(headless=False)
+        browser = playwright_instance.firefox.launch(headless=headless)
     elif browser_name == "webkit":
-        browser = playwright_instance.webkit.launch(headless=False)
+        browser = playwright_instance.webkit.launch(headless=headless)
     else:
-        browser = playwright_instance.chromium.launch(headless=False)
+        browser = playwright_instance.chromium.launch(headless=headless)
 
     yield browser
     browser.close()
@@ -97,7 +100,7 @@ def browser(playwright_instance, config):
 
 @pytest.fixture(scope="function")
 def page(browser, base_url):
-    context = browser.new_context()
+    context = browser.new_context(record_video_dir="reports/videos/")
     page = context.new_page()
     page.goto(base_url)
     yield page
@@ -119,3 +122,22 @@ def pytest_runtest_logstart(nodeid, location):
 
 def pytest_runtest_logfinish(nodeid, location):
     print(f"[FINISH] {nodeid}")
+
+
+def pytest_runtest_makereport(item, call):
+    if call.when == "call":
+        outcome = call.excinfo
+
+        if outcome is not None:
+            page = item.funcargs.get("page", None)
+
+            if page:
+                screenshots_dir = "reports/screenshots"
+                os.makedirs(screenshots_dir, exist_ok=True)
+
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                file_name = f"{item.name}_{timestamp}.png"
+                file_path = os.path.join(screenshots_dir, file_name)
+
+                page.screenshot(path=file_path)
+                print(f"\n[SCREENSHOT SAVED] {file_path}")

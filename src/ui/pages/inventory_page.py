@@ -8,6 +8,8 @@ class InventoryPage(BasePage):
     REMOVE_BACKPACK = "#remove-sauce-labs-backpack"
     CART_BADGE = ".shopping_cart_badge"
     INVENTORY_ITEMS = ".inventory_item"
+    MENU_BUTTON = "#react-burger-menu-btn"
+    LOGOUT_LINK = "#logout_sidebar_link"
 
     def is_inventory_loaded(self) -> bool:
         return self.is_visible(self.INVENTORY_CONTAINER)
@@ -26,3 +28,8 @@ class InventoryPage(BasePage):
 
     def get_inventory_count(self) -> int:
         return self.page.locator(self.INVENTORY_ITEMS).count()
+    
+    def logout(self):
+        self.click(self.MENU_BUTTON)
+        self.page.wait_for_timeout(500)
+        self.click(self.LOGOUT_LINK)
