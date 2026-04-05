@@ -9,3 +9,4 @@ Faker==37.4.2
 python-dotenv==1.1.1
 playwright==1.54.0
 robotframework==7.3.2
+allure-robotframework

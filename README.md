@@ -175,6 +175,13 @@ pytest tests/ui/regression -m "ui and regression" -v
 pytest -v
 ```
 
+## Robot Framework Tests
+
+Run Robot tests:
+```bash
+robot --outputdir reports/robot robot/tests
+```
+
 ---
 
 ## 📊 Reporting
