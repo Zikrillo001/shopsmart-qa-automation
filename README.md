@@ -1,4 +1,3 @@
----
 
 ````md
 # 🚀 ShopSmart QA Automation Framework
