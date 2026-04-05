@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Pytest / reports / cache
+.pytest_cache/
+htmlcov/
+.coverage
+coverage.xml
+reports/
+allure-results/
+allure-report/
+
+# Playwright
+playwright-report/
+test-results/
+
+# Robot Framework
+log.html
+report.html
+output.xml
+
+# Environment files
+.env
+
+# Local config overrides
+config.local.yaml
+
+# Build artifacts
+dist/
+build/
+*.egg-info/

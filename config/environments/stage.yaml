@@ -1,0 +1,3 @@
+environment: stage
+base_url: https://stage.shopsmart.local
+api_base_url: https://stage-api.shopsmart.local

@@ -1,0 +1,5 @@
+project_name: ShopSmart QA Automation Framework
+base_url: https://example.com
+api_base_url: https://api.example.com
+browser: chromium
+timeout: 10
