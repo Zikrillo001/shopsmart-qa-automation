@@ -1,0 +1,25 @@
+LOGIN_RESPONSE_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "id": {"type": "number"},
+        "username": {"type": "string"},
+        "email": {"type": "string"},
+        "firstName": {"type": "string"},
+        "lastName": {"type": "string"},
+        "gender": {"type": "string"},
+        "image": {"type": "string"},
+        "accessToken": {"type": "string"},
+        "refreshToken": {"type": "string"},
+    },
+    "required": [
+        "id",
+        "username",
+        "email",
+        "firstName",
+        "lastName",
+        "gender",
+        "image",
+        "accessToken",
+        "refreshToken",
+    ],
+}
