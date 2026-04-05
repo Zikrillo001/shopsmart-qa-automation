@@ -1,4 +1,5 @@
 import pytest
+from playwright.sync_api import Playwright, sync_playwright
 
 from src.clients.auth_client import AuthClient
 from src.clients.cart_client import CartClient
@@ -16,6 +17,11 @@ def config():
 @pytest.fixture(scope="session")
 def api_base_url(config):
     return config["api_base_url"]
+
+
+@pytest.fixture(scope="session")
+def base_url(config):
+    return config["base_url"]
 
 
 @pytest.fixture(scope="session")
@@ -55,20 +61,47 @@ def auth_token(auth_client):
 
 @pytest.fixture(scope="session")
 def authorized_products_client(api_base_url, timeout, auth_token):
-    client = ProductsClient(api_base_url, token=auth_token, timeout=timeout)
-    return client
+    return ProductsClient(api_base_url, token=auth_token, timeout=timeout)
 
 
 @pytest.fixture(scope="session")
 def authorized_cart_client(api_base_url, timeout, auth_token):
-    client = CartClient(api_base_url, token=auth_token, timeout=timeout)
-    return client
+    return CartClient(api_base_url, token=auth_token, timeout=timeout)
 
 
 @pytest.fixture(scope="session")
 def authorized_orders_client(api_base_url, timeout, auth_token):
-    client = OrdersClient(api_base_url, token=auth_token, timeout=timeout)
-    return client
+    return OrdersClient(api_base_url, token=auth_token, timeout=timeout)
+
+
+@pytest.fixture(scope="session")
+def playwright_instance() -> Playwright:
+    with sync_playwright() as playwright:
+        yield playwright
+
+
+@pytest.fixture(scope="function")
+def browser(playwright_instance, config):
+    browser_name = config.get("browser", "chromium")
+
+    if browser_name == "firefox":
+        browser = playwright_instance.firefox.launch(headless=False)
+    elif browser_name == "webkit":
+        browser = playwright_instance.webkit.launch(headless=False)
+    else:
+        browser = playwright_instance.chromium.launch(headless=False)
+
+    yield browser
+    browser.close()
+
+
+@pytest.fixture(scope="function")
+def page(browser, base_url):
+    context = browser.new_context()
+    page = context.new_page()
+    page.goto(base_url)
+    yield page
+    context.close()
 
 
 def pytest_configure(config):
